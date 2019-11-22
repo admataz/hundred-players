@@ -3,15 +3,33 @@
   import Login from "./Login.svelte";
   import PlayerControls from "./PlayerControls.svelte";
   import Arena from "./Arena.svelte";
+  import Score from "./Score.svelte";
 
   export let pusher = null;
   export let usertoken = null;
   export let pusherChannel = null;
+  export let isGameHost = false;
 
   let currentPlayers = [];
   let me = null;
   let playerPositions = {};
-  let playerDefaultStartPos = { xPos: 0, yPos: 0 };
+  let playerDefaultStartPos = {
+    xPos: 0,
+    yPos: 0,
+    vForce: 0,
+    hForce: 0,
+    speed: 7
+  };
+  let startBallPos = {
+    xPos: 100,
+    yPos: 100,
+    speed: 0,
+    hForce: 1,
+    vForce: 1
+  };
+  let ballPos = { ...startBallPos };
+  let scoreline = [0, 0];
+  let arenaSize = { width: 500, height: 200 };
 
   const setCurrentMembers = pusherMembers => {
     const members = [];
@@ -21,7 +39,10 @@
     pusherMembers.each(m => {
       members.push(m);
     });
+
+    isGameHost = pusherChannel.members.me.id === members[0].id
     return members;
+    
   };
 
   const pusherInit = () => {
@@ -34,25 +55,49 @@
         }
       }
     });
-    
+
     pusherChannel = pusher.subscribe("presence-lnug-channel");
 
     pusherChannel.bind("pusher:subscription_succeeded", function(members) {
       currentPlayers = setCurrentMembers(pusherChannel.members);
       me = pusherChannel.members.me;
+      const team = currentPlayers.length % 2
+
+      updatePlayerPositions(me.id, {
+        ...playerDefaultStartPos,
+        team,
+        xPos: team ? arenaSize.width - 10 : 10,
+        yPos: Math.random() * arenaSize.height 
+      });
     });
 
     pusherChannel.bind("pusher:member_added", function(member) {
       currentPlayers = setCurrentMembers(pusherChannel.members);
-      pusherChannel.trigger("client-member-acceleration", playerPositions[me.id]);
+      pusherChannel.trigger("client-player-move", playerPositions[me.id]);
+      if(isGameHost){
+        pusherChannel.trigger("client-init", {scoreline});
+      }
     });
 
     pusherChannel.bind("pusher:member_removed", function(member) {
       currentPlayers = setCurrentMembers(pusherChannel.members);
     });
 
-    pusherChannel.bind("client-member-acceleration", function(data, meta) {
+    pusherChannel.bind("client-player-move", function(data, meta) {
       updatePlayerPositions(meta.user_id, data);
+    });
+
+    pusherChannel.bind("client-ball-bounce", function(data, meta) {
+      updateBallPosition(data);
+    });
+
+    pusherChannel.bind("client-init", function({scoreline}, meta) {
+      updateScoreline(scoreline);
+    });
+
+    pusherChannel.bind("client-goal", function(data, meta) {
+      updateScoreline(data);
+      updateBallPosition(startBallPos);
     });
   };
 
@@ -69,7 +114,7 @@
     usertoken = data.token;
 
     if (usertoken) {
-      pusherInit()
+      pusherInit();
     }
   };
 
@@ -80,15 +125,48 @@
     };
   };
 
+  const updateBallPosition = newBallPos => {
+    ballPos = {
+      ...startBallPos,
+      ...newBallPos
+    };
+  };
+
+  const updateScoreline = newScoreline => {
+    scoreline = newScoreline;
+  };
+
   const onPlayerControl = evt => {
     const position = {
-        ...playerDefaultStartPos,
-        ...playerPositions[me.id],
-        ...evt.detail,
-        speed: 7
+      ...playerDefaultStartPos,
+      ...playerPositions[me.id],
+      ...evt.detail,
+      speed: 7
     };
     updatePlayerPositions(me.id, position);
-    pusherChannel.trigger("client-member-acceleration", position);
+    pusherChannel.trigger("client-player-move", position);
+  };
+
+  const onGoal = evt => {
+    const newScoreline = [...scoreline];
+    if (evt.detail === "left") {
+      newScoreline[0] += 1;
+    } else {
+      newScoreline[1] += 1;
+    }
+    if(isGameHost){
+      ballPos = startBallPos;
+      updateScoreline(newScoreline);
+      pusherChannel.trigger("client-goal", newScoreline);
+    }
+
+  };
+
+  const onBallCollide = evt => {
+    if(isGameHost){
+      updateBallPosition(evt.detail);
+      pusherChannel.trigger("client-ball-bounce", evt.detail);
+    }
   };
 </script>
 
@@ -102,5 +180,11 @@
 {/if}
 
 {#if usertoken}
-  <Arena {playerPositions} {currentPlayers} />
+  <Score {scoreline} />
+  <Arena
+    {playerPositions}
+    {currentPlayers}
+    {ballPos}
+    on:ballcollide={onBallCollide}
+    on:goooooal={onGoal} />
 {/if}

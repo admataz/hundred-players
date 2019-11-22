@@ -1,21 +1,26 @@
 <script>
+  import { createEventDispatcher } from "svelte";
   import Player from "./Player.svelte";
   import Ball from "./Ball.svelte";
+  import Goal from "./Goal.svelte";
   export let playerPositions = {};
   export let renderedPlayers = [];
   export let currentPlayers = [];
   export let ballPos = {
-    xPos: 100,
+    xPos: 200,
     yPos: 100,
     speed: 0,
     hForce: 1,
     vForce: 1
   };
 
+  const dispatch = createEventDispatcher();
+
   export let playerFriction = 0.2;
   export let ballFriction = 0.1;
 
   export let arenaSize = { width: 500, height: 200 };
+  export let goalSize = 100;
 
   const animStep = () => {
     Object.entries(playerPositions).forEach(([key, p]) => {
@@ -30,16 +35,21 @@
         ballPos.speed = 0;
       }
 
-      p.xPos =
-        (p.xPos + p.hForce * p.speed + arenaSize.width) % arenaSize.width;
-      p.yPos =
-        (p.yPos + p.vForce * p.speed + arenaSize.height) % arenaSize.height;
+      const newxPos = p.xPos + p.hForce * p.speed;
+      if (0 < newxPos && arenaSize.width > newxPos) {
+        p.xPos = newxPos;
+      }
+
+      const newyPos = p.yPos + p.vForce * p.speed
+      if (0 <  newyPos && arenaSize.height > newyPos) {
+        p.yPos = newyPos
+      }
 
       if (
         Math.abs(ballPos.xPos - p.xPos) < 20 &&
         Math.abs(ballPos.yPos - p.yPos) < 20
       ) {
-        ballPos.speed = p.speed;
+        ballPos.speed = p.speed * 1.5;
         if (p.xPos > ballPos.xPos) {
           ballPos.hForce = -1 * Math.random();
           ballPos.xPos -= 10;
@@ -55,6 +65,7 @@
           ballPos.yPos += 10;
           ballPos.vForce = Math.random();
         }
+        dispatch("ballcollide", ballPos);
       }
     });
 
@@ -64,11 +75,25 @@
     }));
 
     if (ballPos.xPos >= arenaSize.width) {
-      ballPos.hForce = -1;
+      if (
+        arenaSize.height / 2 - goalSize / 2 < ballPos.yPos &&
+        arenaSize.height / 2 + goalSize / 2 > ballPos.yPos
+      ) {
+        dispatch("goooooal", "right");
+      } else {
+        ballPos.hForce = -1;
+      }
     }
 
     if (ballPos.xPos < 0) {
-      ballPos.hForce = 1;
+      if (
+        arenaSize.height / 2 - goalSize / 2 < ballPos.yPos &&
+        arenaSize.height / 2 + goalSize / 2 > ballPos.yPos
+      ) {
+        dispatch("goooooal", "left");
+      } else {
+        ballPos.hForce = 1;
+      }
     }
 
     if (ballPos.yPos >= arenaSize.height) {
@@ -100,8 +125,15 @@
 </style>
 
 <main style="width:{arenaSize.width}px; height: {arenaSize.height}px">
+
+  <Goal side="left" />
+  <Goal side="right" />
+
   <Ball {...ballPos} />
+
   {#each renderedPlayers as player}
     <Player {player} xPos={player.xPos} yPos={player.yPos} />
   {/each}
+
+  <svg />
 </main>

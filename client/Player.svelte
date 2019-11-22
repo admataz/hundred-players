@@ -7,7 +7,17 @@
 <style>
   .player {
     position: absolute;
+    border: 2px solid #000;
+    padding: 2px;
+    border-radius: 5px;
+  }
+  .team-0{
+      border-color: red
+  }
+
+  .team-1{
+      border-color: blue;
   }
 </style>
 
-<div class="player" style="top:{`${yPos}px`}; left:{`${xPos}px`}">{player.info.name}</div>
+<div class="player team-{player.team}" style="top:{`${yPos}px`}; left:{`${xPos}px`}">{player.info.name}</div>
