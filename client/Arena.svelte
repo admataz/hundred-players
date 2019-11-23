@@ -128,9 +128,7 @@
 
   <Goal side="left" />
   <Goal side="right" />
-
   <Ball {...ballPos} />
-
   {#each renderedPlayers as player}
     <Player {player} xPos={player.xPos} yPos={player.yPos} />
   {/each}

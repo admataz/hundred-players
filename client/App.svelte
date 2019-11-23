@@ -1,7 +1,7 @@
 <script>
   import Pusher from "pusher-js";
   import Login from "./Login.svelte";
-  import PlayerControls from "./PlayerControls.svelte";
+  import Controls from "./Controls.svelte";
   import Arena from "./Arena.svelte";
   import Score from "./Score.svelte";
 
@@ -40,9 +40,8 @@
       members.push(m);
     });
 
-    isGameHost = pusherChannel.members.me.id === members[0].id
+    isGameHost = pusherChannel.members.me.id === members[0].id;
     return members;
-    
   };
 
   const pusherInit = () => {
@@ -61,21 +60,21 @@
     pusherChannel.bind("pusher:subscription_succeeded", function(members) {
       currentPlayers = setCurrentMembers(pusherChannel.members);
       me = pusherChannel.members.me;
-      const team = currentPlayers.length % 2
+      const team = currentPlayers.length % 2;
 
       updatePlayerPositions(me.id, {
         ...playerDefaultStartPos,
         team,
         xPos: team ? arenaSize.width - 10 : 10,
-        yPos: Math.random() * arenaSize.height 
+        yPos: Math.random() * arenaSize.height
       });
     });
 
     pusherChannel.bind("pusher:member_added", function(member) {
       currentPlayers = setCurrentMembers(pusherChannel.members);
       pusherChannel.trigger("client-player-move", playerPositions[me.id]);
-      if(isGameHost){
-        pusherChannel.trigger("client-init", {scoreline});
+      if (isGameHost) {
+        pusherChannel.trigger("client-init", { scoreline });
       }
     });
 
@@ -91,7 +90,7 @@
       updateBallPosition(data);
     });
 
-    pusherChannel.bind("client-init", function({scoreline}, meta) {
+    pusherChannel.bind("client-init", function({ scoreline }, meta) {
       updateScoreline(scoreline);
     });
 
@@ -154,37 +153,71 @@
     } else {
       newScoreline[1] += 1;
     }
-    if(isGameHost){
+    if (isGameHost) {
       ballPos = startBallPos;
       updateScoreline(newScoreline);
       pusherChannel.trigger("client-goal", newScoreline);
     }
-
   };
 
   const onBallCollide = evt => {
-    if(isGameHost){
+    if (isGameHost) {
       updateBallPosition(evt.detail);
       pusherChannel.trigger("client-ball-bounce", evt.detail);
     }
   };
 </script>
 
+<style>
+  .gamearea {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+  }
+  .scoreboard{
+      flex: 0 1 0;
+      background-color: #999;
+  }
+  .arena{
+      flex: 1
+
+  }
+  .controls{
+    background-color: #efefef;
+      flex: 0 1 0;
+  }
+ 
+
+
+</style>
+
 {#if !usertoken}
+
   <Login on:submit={onSubmit} />
-{/if}
+{:else}
 
-{#if me}
-  <h1>Hello {me.info.name}!</h1>
-  <PlayerControls on:controls={onPlayerControl} />
-{/if}
+  <div class="gamearea">
+    <div class="scoreboard">
+      <Score {scoreline} />
+    </div>
 
-{#if usertoken}
-  <Score {scoreline} />
-  <Arena
-    {playerPositions}
-    {currentPlayers}
-    {ballPos}
-    on:ballcollide={onBallCollide}
-    on:goooooal={onGoal} />
+    <div class="arena">
+      <Arena
+        {playerPositions}
+        {currentPlayers}
+        {ballPos}
+        on:ballcollide={onBallCollide}
+        on:goooooal={onGoal} />
+    </div>
+
+    <div class="controls">
+      <Controls on:controls={onPlayerControl} />
+      <div class="greeting">
+        {#if me}Hello {me.info.name}!{/if}
+      </div>
+    </div>
+
+
+  </div>
 {/if}
