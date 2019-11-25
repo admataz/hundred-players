@@ -18,18 +18,19 @@
     yPos: 0,
     vForce: 0,
     hForce: 0,
-    speed: 7
+    speed: 3
   };
   let startBallPos = {
-    xPos: 100,
-    yPos: 100,
+    xPos: 50,
+    yPos: 50,
     speed: 0,
     hForce: 1,
     vForce: 1
   };
   let ballPos = { ...startBallPos };
   let scoreline = [0, 0];
-  let arenaSize = { width: 500, height: 200 };
+  let arenaSize = { width: 100, height: 100 };
+  let playerSpeed = 1;
 
   const setCurrentMembers = pusherMembers => {
     const members = [];
@@ -140,7 +141,7 @@
       ...playerDefaultStartPos,
       ...playerPositions[me.id],
       ...evt.detail,
-      speed: 7
+      speed: playerSpeed
     };
     updatePlayerPositions(me.id, position);
     pusherChannel.trigger("client-player-move", position);

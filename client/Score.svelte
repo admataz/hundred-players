@@ -17,7 +17,6 @@
     margin: 4px;
     text-align: center;
     font-size: 32px;
-
 }
 
 .team {

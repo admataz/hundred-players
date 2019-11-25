@@ -6,18 +6,41 @@
 
 <style>
   .player {
-    position: absolute;
-    border: 2px solid #000;
-    padding: 2px;
-    border-radius: 5px;
-  }
-  .team-0{
-      border-color: red
+    fill: none;
+    stroke-width: 2;
+    stroke: #fff;
   }
 
-  .team-1{
-      border-color: blue;
+  .player-name {
+    font-size: 10px;
+    text-transform: uppercase;
+    fill: #999;
+  }
+  .team-0 {
+    fill: red;
+  }
+
+  .team-1 {
+    fill: blue;
   }
 </style>
 
-<div class="player team-{player.team}" style="top:{`${yPos}px`}; left:{`${xPos}px`}">{player.info.name}</div>
+<svg y="{yPos}%" x="{xPos}%" overflow="visible">
+  <text class="player-name team-{player.team}" x="12" y="5">
+    {player.info.name}
+  </text>
+    <rect
+    class="player team-{player.team}"
+    width="20"
+    height="20"
+    rx="5"
+    x="-10"
+    y="-10" />
+    <circle
+      r="2"
+      fill="yellow"
+      />
+</svg>
+
+
+ 

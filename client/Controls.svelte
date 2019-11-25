@@ -136,18 +136,18 @@
 <div class="controls-container">
 <div class="controls">
   <div class="button-row minor-buttons">
-    <button on:mousedown={hitA} on:mouseup={goStop}>A</button>
-    <button on:mousedown={hitB} on:mouseup={goStop}>B</button>
+    <button on:mousedown={hitA} on:mouseup={goStop} on:touchstart={hitA} on:touchend={goStop}>A</button>
+    <button on:mousedown={hitB} on:mouseup={goStop} on:touchstart={hitB} on:touchend={goStop}>B</button>
   </div>
   <div class="button-row">
-    <button on:mousedown={goUp} on:mouseup={goStop}>Up</button>
+    <button on:mousedown={goUp} on:mouseup={goStop} on:touchstart={goUp} on:touchend={goStop}>Up</button>
   </div>
   <div class="button-row">
-    <button on:mousedown={goLeft} on:mouseup={goStop}>left</button>
-    <button on:mousedown={goRight} on:mouseup={goStop}>right</button>
+    <button on:mousedown={goLeft} on:mouseup={goStop} on:touchstart={goLeft} on:touchend={goStop}>left</button>
+    <button on:mousedown={goRight} on:mouseup={goStop} on:touchstart={goRight} on:touchend={goStop}>right</button>
   </div>
   <div class="button-row">
-    <button on:mousedown={goDown} on:mouseup={goStop}>down</button>
+    <button on:mousedown={goDown} on:mouseup={goStop} on:touchstart={goDown} on:touchend={goStop}>down</button>
   </div>
 </div>
 

@@ -86,9 +86,6 @@ var app = (function () {
             input.value = value;
         }
     }
-    function set_style(node, key, value, important) {
-        node.style.setProperty(key, value, important ? 'important' : '');
-    }
     function custom_event(type, detail) {
         const e = document.createEvent('CustomEvent');
         e.initCustomEvent(type, false, false, detail);
@@ -6881,22 +6878,30 @@ var app = (function () {
 
     function create_fragment(ctx) {
     	let form;
+    	let label;
+    	let t1;
     	let input0;
-    	let t;
+    	let t2;
     	let input1;
     	let dispose;
 
     	const block = {
     		c: function create() {
     			form = element("form");
+    			label = element("label");
+    			label.textContent = "your initials";
+    			t1 = space();
     			input0 = element("input");
-    			t = space();
+    			t2 = space();
     			input1 = element("input");
+    			add_location(label, file, 13, 2, 267);
     			input0.autofocus = true;
-    			add_location(input0, file, 13, 2, 267);
+    			attr_dev(input0, "maxlength", "2");
+    			attr_dev(input0, "size", "2");
+    			add_location(input0, file, 14, 2, 298);
     			attr_dev(input1, "type", "submit");
     			input1.value = "go";
-    			add_location(input1, file, 14, 2, 309);
+    			add_location(input1, file, 15, 2, 363);
     			attr_dev(form, "id", "registrationForm");
     			add_location(form, file, 12, 0, 200);
 
@@ -6910,9 +6915,11 @@ var app = (function () {
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, form, anchor);
+    			append_dev(form, label);
+    			append_dev(form, t1);
     			append_dev(form, input0);
     			set_input_value(input0, ctx.username);
-    			append_dev(form, t);
+    			append_dev(form, t2);
     			append_dev(form, input1);
     			input0.focus();
     		},
@@ -7064,23 +7071,23 @@ var app = (function () {
     			attr_dev(button0, "class", "svelte-p2zmx8");
     			add_location(button0, file$1, 138, 4, 2574);
     			attr_dev(button1, "class", "svelte-p2zmx8");
-    			add_location(button1, file$1, 139, 4, 2637);
+    			add_location(button1, file$1, 139, 4, 2679);
     			attr_dev(div0, "class", "button-row minor-buttons svelte-p2zmx8");
     			add_location(div0, file$1, 137, 2, 2531);
     			attr_dev(button2, "class", "svelte-p2zmx8");
-    			add_location(button2, file$1, 142, 4, 2736);
+    			add_location(button2, file$1, 142, 4, 2820);
     			attr_dev(div1, "class", "button-row svelte-p2zmx8");
-    			add_location(div1, file$1, 141, 2, 2707);
+    			add_location(div1, file$1, 141, 2, 2791);
     			attr_dev(button3, "class", "svelte-p2zmx8");
-    			add_location(button3, file$1, 145, 4, 2836);
+    			add_location(button3, file$1, 145, 4, 2962);
     			attr_dev(button4, "class", "svelte-p2zmx8");
-    			add_location(button4, file$1, 146, 4, 2904);
+    			add_location(button4, file$1, 146, 4, 3074);
     			attr_dev(div2, "class", "button-row svelte-p2zmx8");
-    			add_location(div2, file$1, 144, 2, 2807);
+    			add_location(div2, file$1, 144, 2, 2933);
     			attr_dev(button5, "class", "svelte-p2zmx8");
-    			add_location(button5, file$1, 149, 4, 3010);
+    			add_location(button5, file$1, 149, 4, 3225);
     			attr_dev(div3, "class", "button-row svelte-p2zmx8");
-    			add_location(div3, file$1, 148, 2, 2981);
+    			add_location(div3, file$1, 148, 2, 3196);
     			attr_dev(div4, "class", "controls svelte-p2zmx8");
     			add_location(div4, file$1, 136, 0, 2506);
     			attr_dev(div5, "class", "controls-container svelte-p2zmx8");
@@ -7091,16 +7098,28 @@ var app = (function () {
     				listen_dev(window, "keyup", ctx.onKeyUp, false, false, false),
     				listen_dev(button0, "mousedown", ctx.hitA, false, false, false),
     				listen_dev(button0, "mouseup", ctx.goStop, false, false, false),
+    				listen_dev(button0, "touchstart", ctx.hitA, { passive: true }, false, false),
+    				listen_dev(button0, "touchend", ctx.goStop, { passive: true }, false, false),
     				listen_dev(button1, "mousedown", ctx.hitB, false, false, false),
     				listen_dev(button1, "mouseup", ctx.goStop, false, false, false),
+    				listen_dev(button1, "touchstart", ctx.hitB, { passive: true }, false, false),
+    				listen_dev(button1, "touchend", ctx.goStop, { passive: true }, false, false),
     				listen_dev(button2, "mousedown", ctx.goUp, false, false, false),
     				listen_dev(button2, "mouseup", ctx.goStop, false, false, false),
+    				listen_dev(button2, "touchstart", ctx.goUp, { passive: true }, false, false),
+    				listen_dev(button2, "touchend", ctx.goStop, { passive: true }, false, false),
     				listen_dev(button3, "mousedown", ctx.goLeft, false, false, false),
     				listen_dev(button3, "mouseup", ctx.goStop, false, false, false),
+    				listen_dev(button3, "touchstart", ctx.goLeft, { passive: true }, false, false),
+    				listen_dev(button3, "touchend", ctx.goStop, { passive: true }, false, false),
     				listen_dev(button4, "mousedown", ctx.goRight, false, false, false),
     				listen_dev(button4, "mouseup", ctx.goStop, false, false, false),
+    				listen_dev(button4, "touchstart", ctx.goRight, { passive: true }, false, false),
+    				listen_dev(button4, "touchend", ctx.goStop, { passive: true }, false, false),
     				listen_dev(button5, "mousedown", ctx.goDown, false, false, false),
-    				listen_dev(button5, "mouseup", ctx.goStop, false, false, false)
+    				listen_dev(button5, "mouseup", ctx.goStop, false, false, false),
+    				listen_dev(button5, "touchstart", ctx.goDown, { passive: true }, false, false),
+    				listen_dev(button5, "touchend", ctx.goStop, { passive: true }, false, false)
     			];
     		},
     		l: function claim(nodes) {
@@ -7329,46 +7348,76 @@ var app = (function () {
     const file$2 = "client/Player.svelte";
 
     function create_fragment$2(ctx) {
-    	let div;
+    	let svg;
+    	let text_1;
     	let t_value = ctx.player.info.name + "";
     	let t;
-    	let div_class_value;
+    	let text_1_class_value;
+    	let rect;
+    	let rect_class_value;
+    	let circle;
+    	let svg_y_value;
+    	let svg_x_value;
 
     	const block = {
     		c: function create() {
-    			div = element("div");
+    			svg = svg_element("svg");
+    			text_1 = svg_element("text");
     			t = text(t_value);
-    			attr_dev(div, "class", div_class_value = "player team-" + ctx.player.team + " svelte-62p2rc");
-    			set_style(div, "top", `${ctx.yPos}px`);
-    			set_style(div, "left", `${ctx.xPos}px`);
-    			add_location(div, file$2, 22, 0, 296);
+    			rect = svg_element("rect");
+    			circle = svg_element("circle");
+    			attr_dev(text_1, "class", text_1_class_value = "player-name team-" + ctx.player.team + " svelte-13mwvf1");
+    			attr_dev(text_1, "x", "12");
+    			attr_dev(text_1, "y", "5");
+    			add_location(text_1, file$2, 28, 2, 381);
+    			attr_dev(rect, "class", rect_class_value = "player team-" + ctx.player.team + " svelte-13mwvf1");
+    			attr_dev(rect, "width", "20");
+    			attr_dev(rect, "height", "20");
+    			attr_dev(rect, "rx", "5");
+    			attr_dev(rect, "x", "-10");
+    			attr_dev(rect, "y", "-10");
+    			add_location(rect, file$2, 31, 4, 477);
+    			attr_dev(circle, "r", "2");
+    			attr_dev(circle, "fill", "yellow");
+    			add_location(circle, file$2, 38, 4, 594);
+    			attr_dev(svg, "y", svg_y_value = "" + (ctx.yPos + "%"));
+    			attr_dev(svg, "x", svg_x_value = "" + (ctx.xPos + "%"));
+    			attr_dev(svg, "overflow", "visible");
+    			add_location(svg, file$2, 27, 0, 330);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, div, anchor);
-    			append_dev(div, t);
+    			insert_dev(target, svg, anchor);
+    			append_dev(svg, text_1);
+    			append_dev(text_1, t);
+    			append_dev(svg, rect);
+    			append_dev(svg, circle);
     		},
     		p: function update(changed, ctx) {
     			if (changed.player && t_value !== (t_value = ctx.player.info.name + "")) set_data_dev(t, t_value);
 
-    			if (changed.player && div_class_value !== (div_class_value = "player team-" + ctx.player.team + " svelte-62p2rc")) {
-    				attr_dev(div, "class", div_class_value);
+    			if (changed.player && text_1_class_value !== (text_1_class_value = "player-name team-" + ctx.player.team + " svelte-13mwvf1")) {
+    				attr_dev(text_1, "class", text_1_class_value);
     			}
 
-    			if (changed.yPos) {
-    				set_style(div, "top", `${ctx.yPos}px`);
+    			if (changed.player && rect_class_value !== (rect_class_value = "player team-" + ctx.player.team + " svelte-13mwvf1")) {
+    				attr_dev(rect, "class", rect_class_value);
     			}
 
-    			if (changed.xPos) {
-    				set_style(div, "left", `${ctx.xPos}px`);
+    			if (changed.yPos && svg_y_value !== (svg_y_value = "" + (ctx.yPos + "%"))) {
+    				attr_dev(svg, "y", svg_y_value);
+    			}
+
+    			if (changed.xPos && svg_x_value !== (svg_x_value = "" + (ctx.xPos + "%"))) {
+    				attr_dev(svg, "x", svg_x_value);
     			}
     		},
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(div);
+    			if (detaching) detach_dev(svg);
     		}
     	};
 
@@ -7462,35 +7511,46 @@ var app = (function () {
     const file$3 = "client/Ball.svelte";
 
     function create_fragment$3(ctx) {
-    	let div;
+    	let svg;
+    	let circle;
+    	let svg_y_value;
+    	let svg_x_value;
 
     	const block = {
     		c: function create() {
-    			div = element("div");
-    			attr_dev(div, "class", "ball svelte-1itng84");
-    			set_style(div, "top", `${ctx.yPos}px`);
-    			set_style(div, "left", `${ctx.xPos}px`);
-    			add_location(div, file$3, 15, 0, 210);
+    			svg = svg_element("svg");
+    			circle = svg_element("circle");
+    			attr_dev(circle, "r", "7");
+    			attr_dev(circle, "cx", "-3.5");
+    			attr_dev(circle, "cy", "-3.5");
+    			attr_dev(circle, "fill", "yellow");
+    			attr_dev(circle, "stroke", "black");
+    			add_location(circle, file$3, 10, 2, 126);
+    			attr_dev(svg, "y", svg_y_value = "" + (ctx.yPos + "%"));
+    			attr_dev(svg, "x", svg_x_value = "" + (ctx.xPos + "%"));
+    			attr_dev(svg, "overflow", "visible");
+    			add_location(svg, file$3, 5, 0, 66);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, div, anchor);
+    			insert_dev(target, svg, anchor);
+    			append_dev(svg, circle);
     		},
     		p: function update(changed, ctx) {
-    			if (changed.yPos) {
-    				set_style(div, "top", `${ctx.yPos}px`);
+    			if (changed.yPos && svg_y_value !== (svg_y_value = "" + (ctx.yPos + "%"))) {
+    				attr_dev(svg, "y", svg_y_value);
     			}
 
-    			if (changed.xPos) {
-    				set_style(div, "left", `${ctx.xPos}px`);
+    			if (changed.xPos && svg_x_value !== (svg_x_value = "" + (ctx.xPos + "%"))) {
+    				attr_dev(svg, "x", svg_x_value);
     			}
     		},
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(div);
+    			if (detaching) detach_dev(svg);
     		}
     	};
 
@@ -7566,31 +7626,59 @@ var app = (function () {
     const file$4 = "client/Goal.svelte";
 
     function create_fragment$4(ctx) {
-    	let div;
-    	let div_style_value;
+    	let svg;
+    	let rect;
+    	let rect_height_value;
+    	let rect_x_value;
+    	let svg_x_value;
+    	let svg_y_value;
 
     	const block = {
     		c: function create() {
-    			div = element("div");
-    			attr_dev(div, "class", "goal svelte-8k1tbj");
-    			attr_dev(div, "style", div_style_value = "height:" + ctx.size + "px; top:" + ctx.pos + "px;  bottom:" + ctx.pos + "px; " + ctx.side + ":0");
-    			add_location(div, file$4, 14, 0, 196);
+    			svg = svg_element("svg");
+    			rect = svg_element("rect");
+    			attr_dev(rect, "stroke-width", "2");
+    			attr_dev(rect, "stroke", "#fff");
+    			attr_dev(rect, "fill", "none");
+    			attr_dev(rect, "stroke-dasharray", "4");
+    			attr_dev(rect, "opacity", "1");
+    			attr_dev(rect, "width", "10");
+    			attr_dev(rect, "height", rect_height_value = "" + (ctx.size + "%"));
+    			attr_dev(rect, "x", rect_x_value = ctx.side === "left" ? 0 : -10);
+    			add_location(rect, file$4, 14, 2, 211);
+    			attr_dev(svg, "x", svg_x_value = "" + ((ctx.side === "left" ? 0 : 100) + "%"));
+    			attr_dev(svg, "y", svg_y_value = "" + (ctx.goalPosts.top + "%"));
+    			attr_dev(svg, "overflow", "visible");
+    			add_location(svg, file$4, 10, 0, 132);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, div, anchor);
+    			insert_dev(target, svg, anchor);
+    			append_dev(svg, rect);
     		},
     		p: function update(changed, ctx) {
-    			if ((changed.size || changed.pos || changed.side) && div_style_value !== (div_style_value = "height:" + ctx.size + "px; top:" + ctx.pos + "px;  bottom:" + ctx.pos + "px; " + ctx.side + ":0")) {
-    				attr_dev(div, "style", div_style_value);
+    			if (changed.size && rect_height_value !== (rect_height_value = "" + (ctx.size + "%"))) {
+    				attr_dev(rect, "height", rect_height_value);
+    			}
+
+    			if (changed.side && rect_x_value !== (rect_x_value = ctx.side === "left" ? 0 : -10)) {
+    				attr_dev(rect, "x", rect_x_value);
+    			}
+
+    			if (changed.side && svg_x_value !== (svg_x_value = "" + ((ctx.side === "left" ? 0 : 100) + "%"))) {
+    				attr_dev(svg, "x", svg_x_value);
+    			}
+
+    			if (changed.goalPosts && svg_y_value !== (svg_y_value = "" + (ctx.goalPosts.top + "%"))) {
+    				attr_dev(svg, "y", svg_y_value);
     			}
     		},
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(div);
+    			if (detaching) detach_dev(svg);
     		}
     	};
 
@@ -7608,8 +7696,8 @@ var app = (function () {
     function instance$4($$self, $$props, $$invalidate) {
     	let { side = "left" } = $$props;
     	let { size = 80 } = $$props;
-    	let { pos = 20 } = $$props;
-    	const writable_props = ["side", "size", "pos"];
+    	let { goalPosts = { top: 10, bottom: 10 } } = $$props;
+    	const writable_props = ["side", "size", "goalPosts"];
 
     	Object.keys($$props).forEach(key => {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn(`<Goal> was created with unknown prop '${key}'`);
@@ -7618,26 +7706,26 @@ var app = (function () {
     	$$self.$set = $$props => {
     		if ("side" in $$props) $$invalidate("side", side = $$props.side);
     		if ("size" in $$props) $$invalidate("size", size = $$props.size);
-    		if ("pos" in $$props) $$invalidate("pos", pos = $$props.pos);
+    		if ("goalPosts" in $$props) $$invalidate("goalPosts", goalPosts = $$props.goalPosts);
     	};
 
     	$$self.$capture_state = () => {
-    		return { side, size, pos };
+    		return { side, size, goalPosts };
     	};
 
     	$$self.$inject_state = $$props => {
     		if ("side" in $$props) $$invalidate("side", side = $$props.side);
     		if ("size" in $$props) $$invalidate("size", size = $$props.size);
-    		if ("pos" in $$props) $$invalidate("pos", pos = $$props.pos);
+    		if ("goalPosts" in $$props) $$invalidate("goalPosts", goalPosts = $$props.goalPosts);
     	};
 
-    	return { side, size, pos };
+    	return { side, size, goalPosts };
     }
 
     class Goal extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$4, create_fragment$4, safe_not_equal, { side: 0, size: 0, pos: 0 });
+    		init(this, options, instance$4, create_fragment$4, safe_not_equal, { side: 0, size: 0, goalPosts: 0 });
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
@@ -7663,11 +7751,11 @@ var app = (function () {
     		throw new Error("<Goal>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
-    	get pos() {
+    	get goalPosts() {
     		throw new Error("<Goal>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
-    	set pos(value) {
+    	set goalPosts(value) {
     		throw new Error("<Goal>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
     }
@@ -7683,7 +7771,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (132:2) {#each renderedPlayers as player}
+    // (171:4) {#each renderedPlayers as player}
     function create_each_block(ctx) {
     	let current;
 
@@ -7729,7 +7817,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(132:2) {#each renderedPlayers as player}",
+    		source: "(171:4) {#each renderedPlayers as player}",
     		ctx
     	});
 
@@ -7738,14 +7826,33 @@ var app = (function () {
 
     function create_fragment$5(ctx) {
     	let main;
-    	let t0;
-    	let t1;
-    	let t2;
-    	let t3;
-    	let svg;
+    	let svg0;
+    	let g;
+    	let circle0;
+    	let circle1;
+    	let line;
+    	let t;
+    	let svg1;
     	let current;
-    	const goal0 = new Goal({ props: { side: "left" }, $$inline: true });
-    	const goal1 = new Goal({ props: { side: "right" }, $$inline: true });
+
+    	const goal0 = new Goal({
+    			props: {
+    				side: "left",
+    				goalPosts: ctx.goalPosts,
+    				size: ctx.goalSize
+    			},
+    			$$inline: true
+    		});
+
+    	const goal1 = new Goal({
+    			props: {
+    				side: "right",
+    				goalPosts: ctx.goalPosts,
+    				size: ctx.goalSize
+    			},
+    			$$inline: true
+    		});
+
     	const ball_spread_levels = [ctx.ballPos];
     	let ball_props = {};
 
@@ -7768,46 +7875,75 @@ var app = (function () {
     	const block = {
     		c: function create() {
     			main = element("main");
+    			svg0 = svg_element("svg");
+    			g = svg_element("g");
+    			circle0 = svg_element("circle");
+    			circle1 = svg_element("circle");
+    			line = svg_element("line");
+    			t = space();
+    			svg1 = svg_element("svg");
     			create_component(goal0.$$.fragment);
-    			t0 = space();
     			create_component(goal1.$$.fragment);
-    			t1 = space();
     			create_component(ball.$$.fragment);
-    			t2 = space();
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
 
-    			t3 = space();
-    			svg = svg_element("svg");
-    			add_location(svg, file$5, 135, 2, 3239);
-    			set_style(main, "width", ctx.arenaSize.width + "px");
-    			set_style(main, "height", ctx.arenaSize.height + "px");
-    			attr_dev(main, "class", "svelte-103gue0");
-    			add_location(main, file$5, 126, 0, 2985);
+    			attr_dev(circle0, "cx", "50%");
+    			attr_dev(circle0, "cy", "50%");
+    			attr_dev(circle0, "r", "20%");
+    			add_location(circle0, file$5, 160, 6, 3784);
+    			attr_dev(circle1, "cx", "50%");
+    			attr_dev(circle1, "cy", "50%");
+    			attr_dev(circle1, "r", "5");
+    			add_location(circle1, file$5, 161, 6, 3827);
+    			attr_dev(line, "x1", "50%");
+    			attr_dev(line, "x2", "50%");
+    			attr_dev(line, "y1", "0");
+    			attr_dev(line, "y2", "100%");
+    			add_location(line, file$5, 162, 6, 3868);
+    			attr_dev(g, "class", "line svelte-18svfbx");
+    			add_location(g, file$5, 159, 4, 3761);
+    			attr_dev(svg0, "class", "linemarkings svelte-18svfbx");
+    			add_location(svg0, file$5, 158, 2, 3730);
+    			attr_dev(svg1, "class", "svgcanvas svelte-18svfbx");
+    			add_location(svg1, file$5, 166, 2, 3933);
+    			attr_dev(main, "class", "playingfield svelte-18svfbx");
+    			add_location(main, file$5, 157, 0, 3700);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, main, anchor);
-    			mount_component(goal0, main, null);
-    			append_dev(main, t0);
-    			mount_component(goal1, main, null);
-    			append_dev(main, t1);
-    			mount_component(ball, main, null);
-    			append_dev(main, t2);
+    			append_dev(main, svg0);
+    			append_dev(svg0, g);
+    			append_dev(g, circle0);
+    			append_dev(g, circle1);
+    			append_dev(g, line);
+    			append_dev(main, t);
+    			append_dev(main, svg1);
+    			mount_component(goal0, svg1, null);
+    			mount_component(goal1, svg1, null);
+    			mount_component(ball, svg1, null);
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
-    				each_blocks[i].m(main, null);
+    				each_blocks[i].m(svg1, null);
     			}
 
-    			append_dev(main, t3);
-    			append_dev(main, svg);
     			current = true;
     		},
     		p: function update(changed, ctx) {
+    			const goal0_changes = {};
+    			if (changed.goalPosts) goal0_changes.goalPosts = ctx.goalPosts;
+    			if (changed.goalSize) goal0_changes.size = ctx.goalSize;
+    			goal0.$set(goal0_changes);
+    			const goal1_changes = {};
+    			if (changed.goalPosts) goal1_changes.goalPosts = ctx.goalPosts;
+    			if (changed.goalSize) goal1_changes.size = ctx.goalSize;
+    			goal1.$set(goal1_changes);
+
     			const ball_changes = changed.ballPos
     			? get_spread_update(ball_spread_levels, [get_spread_object(ctx.ballPos)])
     			: {};
@@ -7828,7 +7964,7 @@ var app = (function () {
     						each_blocks[i] = create_each_block(child_ctx);
     						each_blocks[i].c();
     						transition_in(each_blocks[i], 1);
-    						each_blocks[i].m(main, t3);
+    						each_blocks[i].m(svg1, null);
     					}
     				}
 
@@ -7839,14 +7975,6 @@ var app = (function () {
     				}
 
     				check_outros();
-    			}
-
-    			if (!current || changed.arenaSize) {
-    				set_style(main, "width", ctx.arenaSize.width + "px");
-    			}
-
-    			if (!current || changed.arenaSize) {
-    				set_style(main, "height", ctx.arenaSize.height + "px");
     			}
     		},
     		i: function intro(local) {
@@ -7899,18 +8027,22 @@ var app = (function () {
     	let { currentPlayers = [] } = $$props;
 
     	let { ballPos = {
-    		xPos: 200,
-    		yPos: 100,
+    		xPos: 50,
+    		yPos: 50,
     		speed: 0,
     		hForce: 1,
     		vForce: 1
     	} } = $$props;
 
     	const dispatch = createEventDispatcher();
-    	let { playerFriction = 0.2 } = $$props;
-    	let { ballFriction = 0.1 } = $$props;
-    	let { arenaSize = { width: 500, height: 200 } } = $$props;
-    	let { goalSize = 100 } = $$props;
+    	let { playerFriction = 0.05 } = $$props;
+    	let { ballFriction = 0.08 } = $$props;
+    	let { arenaSize = { width: 100, height: 100 } } = $$props;
+    	let { goalSize = 30 } = $$props;
+    	let { collisionProximity = 2.8 } = $$props;
+    	let { kickVariation = 1.5 } = $$props;
+    	let containerWidth;
+    	let containerHeight;
 
     	const animStep = () => {
     		Object.entries(playerPositions).forEach(([key, p]) => {
@@ -7938,23 +8070,23 @@ var app = (function () {
     				p.yPos = newyPos;
     			}
 
-    			if (Math.abs(ballPos.xPos - p.xPos) < 20 && Math.abs(ballPos.yPos - p.yPos) < 20) {
-    				$$invalidate("ballPos", ballPos.speed = p.speed * 1.5, ballPos);
+    			if (Math.abs(ballPos.xPos - p.xPos) <= collisionProximity && Math.abs(ballPos.yPos - p.yPos) <= collisionProximity) {
+    				$$invalidate("ballPos", ballPos.speed = p.speed * 2, ballPos);
 
     				if (p.xPos > ballPos.xPos) {
-    					$$invalidate("ballPos", ballPos.hForce = -1 * Math.random(), ballPos);
-    					$$invalidate("ballPos", ballPos.xPos -= 10, ballPos);
+    					$$invalidate("ballPos", ballPos.hForce = -1 * (Math.random() * kickVariation), ballPos);
+    					$$invalidate("ballPos", ballPos.xPos -= collisionProximity, ballPos);
     				} else {
-    					$$invalidate("ballPos", ballPos.hForce = Math.random(), ballPos);
-    					$$invalidate("ballPos", ballPos.xPos += 10, ballPos);
+    					$$invalidate("ballPos", ballPos.hForce = Math.random() * kickVariation, ballPos);
+    					$$invalidate("ballPos", ballPos.xPos += collisionProximity, ballPos);
     				}
 
     				if (p.yPos > ballPos.yPos) {
-    					$$invalidate("ballPos", ballPos.yPos -= 10, ballPos);
-    					$$invalidate("ballPos", ballPos.vForce = -1 * Math.random(), ballPos);
+    					$$invalidate("ballPos", ballPos.yPos -= collisionProximity, ballPos);
+    					$$invalidate("ballPos", ballPos.vForce = -1 * (Math.random() * kickVariation), ballPos);
     				} else {
-    					$$invalidate("ballPos", ballPos.yPos += 10, ballPos);
-    					$$invalidate("ballPos", ballPos.vForce = Math.random(), ballPos);
+    					$$invalidate("ballPos", ballPos.yPos += collisionProximity, ballPos);
+    					$$invalidate("ballPos", ballPos.vForce = Math.random() * kickVariation, ballPos);
     				}
 
     				dispatch("ballcollide", ballPos);
@@ -8006,7 +8138,9 @@ var app = (function () {
     		"playerFriction",
     		"ballFriction",
     		"arenaSize",
-    		"goalSize"
+    		"goalSize",
+    		"collisionProximity",
+    		"kickVariation"
     	];
 
     	Object_1.keys($$props).forEach(key => {
@@ -8022,6 +8156,8 @@ var app = (function () {
     		if ("ballFriction" in $$props) $$invalidate("ballFriction", ballFriction = $$props.ballFriction);
     		if ("arenaSize" in $$props) $$invalidate("arenaSize", arenaSize = $$props.arenaSize);
     		if ("goalSize" in $$props) $$invalidate("goalSize", goalSize = $$props.goalSize);
+    		if ("collisionProximity" in $$props) $$invalidate("collisionProximity", collisionProximity = $$props.collisionProximity);
+    		if ("kickVariation" in $$props) $$invalidate("kickVariation", kickVariation = $$props.kickVariation);
     	};
 
     	$$self.$capture_state = () => {
@@ -8033,7 +8169,12 @@ var app = (function () {
     			playerFriction,
     			ballFriction,
     			arenaSize,
-    			goalSize
+    			goalSize,
+    			collisionProximity,
+    			kickVariation,
+    			containerWidth,
+    			containerHeight,
+    			goalPosts
     		};
     	};
 
@@ -8046,6 +8187,22 @@ var app = (function () {
     		if ("ballFriction" in $$props) $$invalidate("ballFriction", ballFriction = $$props.ballFriction);
     		if ("arenaSize" in $$props) $$invalidate("arenaSize", arenaSize = $$props.arenaSize);
     		if ("goalSize" in $$props) $$invalidate("goalSize", goalSize = $$props.goalSize);
+    		if ("collisionProximity" in $$props) $$invalidate("collisionProximity", collisionProximity = $$props.collisionProximity);
+    		if ("kickVariation" in $$props) $$invalidate("kickVariation", kickVariation = $$props.kickVariation);
+    		if ("containerWidth" in $$props) containerWidth = $$props.containerWidth;
+    		if ("containerHeight" in $$props) containerHeight = $$props.containerHeight;
+    		if ("goalPosts" in $$props) $$invalidate("goalPosts", goalPosts = $$props.goalPosts);
+    	};
+
+    	let goalPosts;
+
+    	$$self.$$.update = (changed = { arenaSize: 1, goalSize: 1 }) => {
+    		if (changed.arenaSize || changed.goalSize) {
+    			 $$invalidate("goalPosts", goalPosts = {
+    				top: arenaSize.height / 2 - goalSize / 2,
+    				bottom: arenaSize.height / 2 + goalSize / 2
+    			});
+    		}
     	};
 
     	return {
@@ -8056,7 +8213,10 @@ var app = (function () {
     		playerFriction,
     		ballFriction,
     		arenaSize,
-    		goalSize
+    		goalSize,
+    		collisionProximity,
+    		kickVariation,
+    		goalPosts
     	};
     }
 
@@ -8072,7 +8232,9 @@ var app = (function () {
     			playerFriction: 0,
     			ballFriction: 0,
     			arenaSize: 0,
-    			goalSize: 0
+    			goalSize: 0,
+    			collisionProximity: 0,
+    			kickVariation: 0
     		});
 
     		dispatch_dev("SvelteRegisterComponent", {
@@ -8146,6 +8308,22 @@ var app = (function () {
     	set goalSize(value) {
     		throw new Error("<Arena>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
+
+    	get collisionProximity() {
+    		throw new Error("<Arena>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set collisionProximity(value) {
+    		throw new Error("<Arena>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get kickVariation() {
+    		throw new Error("<Arena>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set kickVariation(value) {
+    		throw new Error("<Arena>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
     }
 
     /* client/Score.svelte generated by Svelte v3.14.1 */
@@ -8178,16 +8356,16 @@ var app = (function () {
     			t3 = text(t3_value);
     			t4 = space();
     			div3 = element("div");
-    			attr_dev(div0, "class", "team team-1 svelte-rprp6l");
-    			add_location(div0, file$6, 39, 4, 467);
-    			attr_dev(div1, "class", "score svelte-rprp6l");
-    			add_location(div1, file$6, 40, 4, 503);
-    			attr_dev(div2, "class", "score svelte-rprp6l");
-    			add_location(div2, file$6, 41, 4, 547);
-    			attr_dev(div3, "class", "team team-0 svelte-rprp6l");
-    			add_location(div3, file$6, 42, 4, 591);
-    			attr_dev(div4, "class", "scoreboard svelte-rprp6l");
-    			add_location(div4, file$6, 38, 0, 438);
+    			attr_dev(div0, "class", "team team-1 svelte-1w98fn7");
+    			add_location(div0, file$6, 38, 4, 466);
+    			attr_dev(div1, "class", "score svelte-1w98fn7");
+    			add_location(div1, file$6, 39, 4, 502);
+    			attr_dev(div2, "class", "score svelte-1w98fn7");
+    			add_location(div2, file$6, 40, 4, 546);
+    			attr_dev(div3, "class", "team team-0 svelte-1w98fn7");
+    			add_location(div3, file$6, 41, 4, 590);
+    			attr_dev(div4, "class", "scoreboard svelte-1w98fn7");
+    			add_location(div4, file$6, 37, 0, 437);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -8274,7 +8452,7 @@ var app = (function () {
     /* client/App.svelte generated by Svelte v3.14.1 */
     const file$7 = "client/App.svelte";
 
-    // (198:0) {:else}
+    // (199:0) {:else}
     function create_else_block(ctx) {
     	let div4;
     	let div0;
@@ -8321,15 +8499,15 @@ var app = (function () {
     			div2 = element("div");
     			if (if_block) if_block.c();
     			attr_dev(div0, "class", "scoreboard svelte-bo8biv");
-    			add_location(div0, file$7, 200, 4, 4518);
+    			add_location(div0, file$7, 201, 4, 4549);
     			attr_dev(div1, "class", "arena svelte-bo8biv");
-    			add_location(div1, file$7, 204, 4, 4587);
+    			add_location(div1, file$7, 205, 4, 4618);
     			attr_dev(div2, "class", "greeting");
-    			add_location(div2, file$7, 215, 6, 4854);
+    			add_location(div2, file$7, 216, 6, 4885);
     			attr_dev(div3, "class", "controls svelte-bo8biv");
-    			add_location(div3, file$7, 213, 4, 4776);
+    			add_location(div3, file$7, 214, 4, 4807);
     			attr_dev(div4, "class", "gamearea svelte-bo8biv");
-    			add_location(div4, file$7, 199, 2, 4491);
+    			add_location(div4, file$7, 200, 2, 4522);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div4, anchor);
@@ -8395,14 +8573,14 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(198:0) {:else}",
+    		source: "(199:0) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (195:0) {#if !usertoken}
+    // (196:0) {#if !usertoken}
     function create_if_block(ctx) {
     	let current;
     	const login = new Login({ $$inline: true });
@@ -8435,14 +8613,14 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(195:0) {#if !usertoken}",
+    		source: "(196:0) {#if !usertoken}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (217:8) {#if me}
+    // (218:8) {#if me}
     function create_if_block_1(ctx) {
     	let t0;
     	let t1_value = ctx.me.info.name + "";
@@ -8474,7 +8652,7 @@ var app = (function () {
     		block,
     		id: create_if_block_1.name,
     		type: "if",
-    		source: "(217:8) {#if me}",
+    		source: "(218:8) {#if me}",
     		ctx
     	});
 
@@ -8561,6 +8739,8 @@ var app = (function () {
     	return block;
     }
 
+    let playerSpeed = 1;
+
     function instance$7($$self, $$props, $$invalidate) {
     	let { pusher = null } = $$props;
     	let { usertoken = null } = $$props;
@@ -8575,12 +8755,12 @@ var app = (function () {
     		yPos: 0,
     		vForce: 0,
     		hForce: 0,
-    		speed: 7
+    		speed: 3
     	};
 
     	let startBallPos = {
-    		xPos: 100,
-    		yPos: 100,
+    		xPos: 50,
+    		yPos: 50,
     		speed: 0,
     		hForce: 1,
     		vForce: 1
@@ -8588,7 +8768,7 @@ var app = (function () {
 
     	let ballPos = { ...startBallPos };
     	let scoreline = [0, 0];
-    	let arenaSize = { width: 500, height: 200 };
+    	let arenaSize = { width: 100, height: 100 };
 
     	const setCurrentMembers = pusherMembers => {
     		const members = [];
@@ -8693,7 +8873,7 @@ var app = (function () {
     			...playerDefaultStartPos,
     			...playerPositions[me.id],
     			...evt.detail,
-    			speed: 7
+    			speed: playerSpeed
     		};
 
     		updatePlayerPositions(me.id, position);
@@ -8749,7 +8929,8 @@ var app = (function () {
     			startBallPos,
     			ballPos,
     			scoreline,
-    			arenaSize
+    			arenaSize,
+    			playerSpeed
     		};
     	};
 
@@ -8766,6 +8947,7 @@ var app = (function () {
     		if ("ballPos" in $$props) $$invalidate("ballPos", ballPos = $$props.ballPos);
     		if ("scoreline" in $$props) $$invalidate("scoreline", scoreline = $$props.scoreline);
     		if ("arenaSize" in $$props) arenaSize = $$props.arenaSize;
+    		if ("playerSpeed" in $$props) playerSpeed = $$props.playerSpeed;
     	};
 
     	return {

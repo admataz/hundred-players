@@ -1,15 +1,26 @@
 <script>
   export let side = "left";
   export let size = 80;
-  export let pos = 20;
+  export let goalPosts = {
+    top: 10,
+    bottom: 10
+  }
 </script>
 
-<style>
-  .goal {
-    border: 1px solid #000;
-    width: 10px;
-    position: absolute;
-  }
-</style>
 
-<div class="goal" style="height:{size}px; top:{pos}px;  bottom:{pos}px; {side}:0" />
+<svg 
+x="{side==='left'? 0 : 100}%"
+y="{goalPosts.top}%"
+overflow="visible">
+  <rect  
+    stroke-width="2"  
+    stroke="#fff"
+    fill="none"
+    stroke-dasharray="4"
+    opacity="1"
+    width="10"
+    height="{size}%"
+    x="{side==='left' ? 0 : -10}"
+    />
+
+</svg>

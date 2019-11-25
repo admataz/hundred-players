@@ -11,6 +11,7 @@ export const onSubmit = (evt) =>  {
 </script>
 
 <form id="registrationForm" on:submit|preventDefault={onSubmit}>
-  <input bind:value={username} autofocus>
+  <label>your initials</label>
+  <input bind:value={username} autofocus maxlength="2" size="2">
   <input type="submit" value="go">
 </form>

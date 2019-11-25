@@ -3,14 +3,16 @@
   export let yPos = 0;
 </script>
 
-<style>
-  .ball {
-    position: absolute;
-    border: 1px solid #000;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px; 
-  }
-</style>
-
-<div class="ball" style="top:{`${yPos}px`}; left:{`${xPos}px`}" />
+<svg 
+  y="{yPos}%"
+  x="{xPos}%" 
+  overflow="visible"
+>
+  <circle 
+    r="7"
+    cx="-3.5"
+    cy="-3.5"
+    fill="yellow"
+    stroke="black"
+   />
+</svg>

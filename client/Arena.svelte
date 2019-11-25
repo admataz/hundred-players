@@ -7,8 +7,8 @@
   export let renderedPlayers = [];
   export let currentPlayers = [];
   export let ballPos = {
-    xPos: 200,
-    yPos: 100,
+    xPos: 50,
+    yPos: 50,
     speed: 0,
     hForce: 1,
     vForce: 1
@@ -16,11 +16,16 @@
 
   const dispatch = createEventDispatcher();
 
-  export let playerFriction = 0.2;
-  export let ballFriction = 0.1;
+  export let playerFriction = 0.05;
+  export let ballFriction = 0.08;
 
-  export let arenaSize = { width: 500, height: 200 };
-  export let goalSize = 100;
+  export let arenaSize = { width: 100, height: 100 };
+  export let goalSize = 30;
+  export let collisionProximity = 2.8;
+  export let kickVariation = 1.5;
+
+  let containerWidth;
+  let containerHeight;
 
   const animStep = () => {
     Object.entries(playerPositions).forEach(([key, p]) => {
@@ -40,30 +45,30 @@
         p.xPos = newxPos;
       }
 
-      const newyPos = p.yPos + p.vForce * p.speed
-      if (0 <  newyPos && arenaSize.height > newyPos) {
-        p.yPos = newyPos
+      const newyPos = p.yPos + p.vForce * p.speed;
+      if (0 < newyPos && arenaSize.height > newyPos) {
+        p.yPos = newyPos;
       }
 
       if (
-        Math.abs(ballPos.xPos - p.xPos) < 20 &&
-        Math.abs(ballPos.yPos - p.yPos) < 20
+        Math.abs(ballPos.xPos - p.xPos) <= collisionProximity &&
+        Math.abs(ballPos.yPos - p.yPos) <= collisionProximity
       ) {
-        ballPos.speed = p.speed * 1.5;
+        ballPos.speed = p.speed * 2;
         if (p.xPos > ballPos.xPos) {
-          ballPos.hForce = -1 * Math.random();
-          ballPos.xPos -= 10;
+          ballPos.hForce = -1 * (Math.random() * kickVariation);
+          ballPos.xPos -= collisionProximity;
         } else {
-          ballPos.hForce = Math.random();
-          ballPos.xPos += 10;
+          ballPos.hForce = Math.random() * kickVariation;
+          ballPos.xPos += collisionProximity;
         }
 
         if (p.yPos > ballPos.yPos) {
-          ballPos.yPos -= 10;
-          ballPos.vForce = -1 * Math.random();
+          ballPos.yPos -= collisionProximity;
+          ballPos.vForce = -1 * (Math.random() * kickVariation);
         } else {
-          ballPos.yPos += 10;
-          ballPos.vForce = Math.random();
+          ballPos.yPos += collisionProximity;
+          ballPos.vForce = Math.random() * kickVariation;
         }
         dispatch("ballcollide", ballPos);
       }
@@ -111,10 +116,12 @@
     };
     window.requestAnimationFrame(animStep);
   };
-
   animStep();
 
-  // $: console.log(playerPositions);
+  $: goalPosts = {
+    top: arenaSize.height / 2 - goalSize / 2,
+    bottom: arenaSize.height / 2 + goalSize / 2
+  };
 </script>
 
 <style>
@@ -122,16 +129,48 @@
     border: 1px solid #000;
     position: relative;
   }
+  .svgcanvas {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+  .linemarkings {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .playingfield {
+    background: green;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .line {
+    stroke: white;
+    opacity: 0.5;
+    stroke-width: 5;
+    fill: none;
+  }
 </style>
 
-<main style="width:{arenaSize.width}px; height: {arenaSize.height}px">
+<main class="playingfield">
+  <svg class="linemarkings">
+    <g class="line">
+      <circle cx="50%" cy="50%" r="20%" />
+      <circle cx="50%" cy="50%" r="5" />
+      <line x1="50%" x2="50%" y1="0" y2="100%" />
+    </g>
+  </svg>
 
-  <Goal side="left" />
-  <Goal side="right" />
-  <Ball {...ballPos} />
-  {#each renderedPlayers as player}
-    <Player {player} xPos={player.xPos} yPos={player.yPos} />
-  {/each}
+  <svg class="svgcanvas">
+    <Goal side="left" {goalPosts} size={goalSize} />
+    <Goal side="right" {goalPosts} size={goalSize} />
+    <Ball {...ballPos} />
+    {#each renderedPlayers as player}
+      <Player {player} xPos={player.xPos} yPos={player.yPos} />
+    {/each}
+  </svg>
 
-  <svg />
 </main>
