@@ -4,12 +4,15 @@
   import Controls from "./Controls.svelte";
   import Arena from "./Arena.svelte";
   import Score from "./Score.svelte";
+  import ReceivedMessages from './ReceivedMessages.svelte'
 
   export let pusher = null;
   export let usertoken = null;
   export let pusherChannel = null;
+  export let messagesChannel = null;
   export let isGameHost = false;
 
+  let receivedMessages = [];
   let currentPlayers = [];
   let me = null;
   let playerPositions = {};
@@ -57,6 +60,7 @@
     });
 
     pusherChannel = pusher.subscribe("presence-lnug-channel");
+    messagesChannel = pusher.subscribe("lnug-game-cheers");
 
     pusherChannel.bind("pusher:subscription_succeeded", function(members) {
       currentPlayers = setCurrentMembers(pusherChannel.members);
@@ -99,6 +103,10 @@
       updateScoreline(data);
       updateBallPosition(startBallPos);
     });
+
+    messagesChannel.bind('twitter-hoorah', function(data){
+      receivedMessages = [...receivedMessages, data]
+    })
   };
 
   const onSubmit = async evt => {
@@ -189,6 +197,10 @@
       flex: 0 1 0;
   }
  
+ .messagesbanner{
+   flex: 0 1 0;
+
+ }
 
 
 </style>
@@ -199,6 +211,9 @@
 {:else}
 
   <div class="gamearea">
+    <div class="messagesbanner">
+       <ReceivedMessages messages={receivedMessages} />
+    </div>
     <div class="scoreboard">
       <Score {scoreline} />
     </div>

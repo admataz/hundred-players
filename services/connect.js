@@ -1,13 +1,8 @@
 const Pusher = require('pusher');
 const crypto = require('crypto');
+const config = require('../config')
 
-const pusher = new Pusher({
-    appId: '883928',
-    key: '5682fcdf7df3eb814416',
-    secret: '7bd1b2333a6520bbe1b5',
-    cluster: 'eu',
-    encrypted: true
-}) 
+const pusher = new Pusher(config.pusher) 
 
 module.exports = async function(fastify, opts) {
   fastify.get(
@@ -29,10 +24,6 @@ module.exports = async function(fastify, opts) {
     async function(request, reply) {
       reply.header('Access-Control-Allow-Origin', '*');
       reply.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
-      console.log(request.user)
-      
-
       var socketId = request.body.socket_id;
       var channel = request.body.channel_name;
       let presenceData = {

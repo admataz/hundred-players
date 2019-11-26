@@ -8,7 +8,8 @@
   },
   "scripts": {
     "start": "npm run server:start",
-    "dev": "npm run server:dev & npm run client:dev",
+    "dev": "npm run client:dev",
+    "build": "npm run client:build",
     "server:test": "tap test/**/*.test.js",
     "server:start": "fastify start -l info app.js",
     "server:dev": "fastify start -w  -l info -P app.js",
@@ -19,6 +20,7 @@
   "author": "Adam Davis <adam@admataz.com>",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "fastify": "^2.0.0",
     "fastify-autoload": "^1.0.0",
     "fastify-cli": "^1.3.0",
@@ -27,16 +29,17 @@
     "fastify-plugin": "^1.5.0",
     "fastify-static": "^2.5.0",
     "pusher": "^3.0.0",
-    "pusher-js": "^5.0.2"
+    "pusher-js": "^5.0.2",
+    "twitter": "^1.7.1"
   },
   "devDependencies": {
-    "tap": "^12.5.3",
     "rollup": "^1.12.0",
     "rollup-plugin-commonjs": "^10.0.0",
     "rollup-plugin-livereload": "^1.0.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-svelte": "^5.0.3",
     "rollup-plugin-terser": "^5.1.2",
-    "svelte": "^3.0.0"
+    "svelte": "^3.0.0",
+    "tap": "^14.10.1"
   }
 }
