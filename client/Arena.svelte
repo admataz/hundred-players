@@ -22,7 +22,7 @@
   export let arenaSize = { width: 100, height: 100 };
   export let goalSize = 30;
   export let collisionProximity = 2.8;
-  export let kickVariation = 1.5;
+  export let kickVariation = 2;
 
   let containerWidth;
   let containerHeight;
@@ -61,12 +61,12 @@
         } else {
           ballPos.hForce = Math.random() * kickVariation;
           ballPos.xPos += collisionProximity;
-        }
-
-        if (p.yPos > ballPos.yPos) {
+        } 
+        
+        if (p.yPos > ballPos.yPos) {          
           ballPos.yPos -= collisionProximity;
           ballPos.vForce = -1 * (Math.random() * kickVariation);
-        } else {
+        } else {          
           ballPos.yPos += collisionProximity;
           ballPos.vForce = Math.random() * kickVariation;
         }
@@ -79,13 +79,14 @@
       ...playerPositions[m.id]
     }));
 
-    if (ballPos.xPos >= arenaSize.width) {
+    if (ballPos.xPos > arenaSize.width) {
       if (
         arenaSize.height / 2 - goalSize / 2 < ballPos.yPos &&
         arenaSize.height / 2 + goalSize / 2 > ballPos.yPos
       ) {
         dispatch("goooooal", "right");
       } else {
+        ballPos.xPos = arenaSize.width-1;
         ballPos.hForce = -1;
       }
     }
@@ -97,15 +98,18 @@
       ) {
         dispatch("goooooal", "left");
       } else {
+        ballPos.xPos = 1;
         ballPos.hForce = 1;
       }
     }
 
-    if (ballPos.yPos >= arenaSize.height) {
+    if (ballPos.yPos > arenaSize.height) {
+      ballPos.yPos = arenaSize.height-1;
       ballPos.vForce = -1;
     }
 
     if (ballPos.yPos < 0) {
+      ballPos.yPos = 1;
       ballPos.vForce = 1;
     }
 

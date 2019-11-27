@@ -8017,7 +8017,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (171:4) {#each renderedPlayers as player}
+    // (175:4) {#each renderedPlayers as player}
     function create_each_block(ctx) {
     	let current;
 
@@ -8065,7 +8065,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(171:4) {#each renderedPlayers as player}",
+    		source: "(175:4) {#each renderedPlayers as player}",
     		ctx
     	});
 
@@ -8141,24 +8141,24 @@ var app = (function () {
     			attr_dev(circle0, "cx", "50%");
     			attr_dev(circle0, "cy", "50%");
     			attr_dev(circle0, "r", "20%");
-    			add_location(circle0, file$5, 160, 6, 3784);
+    			add_location(circle0, file$5, 164, 6, 3942);
     			attr_dev(circle1, "cx", "50%");
     			attr_dev(circle1, "cy", "50%");
     			attr_dev(circle1, "r", "5");
-    			add_location(circle1, file$5, 161, 6, 3827);
+    			add_location(circle1, file$5, 165, 6, 3985);
     			attr_dev(line, "x1", "50%");
     			attr_dev(line, "x2", "50%");
     			attr_dev(line, "y1", "0");
     			attr_dev(line, "y2", "100%");
-    			add_location(line, file$5, 162, 6, 3868);
+    			add_location(line, file$5, 166, 6, 4026);
     			attr_dev(g, "class", "line svelte-18svfbx");
-    			add_location(g, file$5, 159, 4, 3761);
+    			add_location(g, file$5, 163, 4, 3919);
     			attr_dev(svg0, "class", "linemarkings svelte-18svfbx");
-    			add_location(svg0, file$5, 158, 2, 3730);
+    			add_location(svg0, file$5, 162, 2, 3888);
     			attr_dev(svg1, "class", "svgcanvas svelte-18svfbx");
-    			add_location(svg1, file$5, 166, 2, 3933);
+    			add_location(svg1, file$5, 170, 2, 4091);
     			attr_dev(main, "class", "playingfield svelte-18svfbx");
-    			add_location(main, file$5, 157, 0, 3700);
+    			add_location(main, file$5, 161, 0, 3858);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -8288,7 +8288,7 @@ var app = (function () {
     	let { arenaSize = { width: 100, height: 100 } } = $$props;
     	let { goalSize = 30 } = $$props;
     	let { collisionProximity = 2.8 } = $$props;
-    	let { kickVariation = 1.5 } = $$props;
+    	let { kickVariation = 2 } = $$props;
     	let containerWidth;
     	let containerHeight;
 
@@ -8343,10 +8343,11 @@ var app = (function () {
 
     		$$invalidate("renderedPlayers", renderedPlayers = currentPlayers.map(m => ({ ...m, ...playerPositions[m.id] })));
 
-    		if (ballPos.xPos >= arenaSize.width) {
+    		if (ballPos.xPos > arenaSize.width) {
     			if (arenaSize.height / 2 - goalSize / 2 < ballPos.yPos && arenaSize.height / 2 + goalSize / 2 > ballPos.yPos) {
     				dispatch("goooooal", "right");
     			} else {
+    				$$invalidate("ballPos", ballPos.xPos = arenaSize.width - 1, ballPos);
     				$$invalidate("ballPos", ballPos.hForce = -1, ballPos);
     			}
     		}
@@ -8355,15 +8356,18 @@ var app = (function () {
     			if (arenaSize.height / 2 - goalSize / 2 < ballPos.yPos && arenaSize.height / 2 + goalSize / 2 > ballPos.yPos) {
     				dispatch("goooooal", "left");
     			} else {
+    				$$invalidate("ballPos", ballPos.xPos = 1, ballPos);
     				$$invalidate("ballPos", ballPos.hForce = 1, ballPos);
     			}
     		}
 
-    		if (ballPos.yPos >= arenaSize.height) {
+    		if (ballPos.yPos > arenaSize.height) {
+    			$$invalidate("ballPos", ballPos.yPos = arenaSize.height - 1, ballPos);
     			$$invalidate("ballPos", ballPos.vForce = -1, ballPos);
     		}
 
     		if (ballPos.yPos < 0) {
+    			$$invalidate("ballPos", ballPos.yPos = 1, ballPos);
     			$$invalidate("ballPos", ballPos.vForce = 1, ballPos);
     		}
 
@@ -8955,7 +8959,7 @@ var app = (function () {
     const { console: console_1 } = globals;
     const file$8 = "client/App.svelte";
 
-    // (220:0) {:else}
+    // (219:0) {:else}
     function create_else_block(ctx) {
     	let div5;
     	let div0;
@@ -9013,17 +9017,17 @@ var app = (function () {
     			div3 = element("div");
     			if (if_block) if_block.c();
     			attr_dev(div0, "class", "messagesbanner svelte-tjbafg");
-    			add_location(div0, file$8, 222, 4, 5109);
+    			add_location(div0, file$8, 221, 4, 5079);
     			attr_dev(div1, "class", "scoreboard svelte-tjbafg");
-    			add_location(div1, file$8, 225, 4, 5209);
+    			add_location(div1, file$8, 224, 4, 5179);
     			attr_dev(div2, "class", "arena svelte-tjbafg");
-    			add_location(div2, file$8, 229, 4, 5278);
+    			add_location(div2, file$8, 228, 4, 5248);
     			attr_dev(div3, "class", "greeting");
-    			add_location(div3, file$8, 240, 6, 5566);
+    			add_location(div3, file$8, 239, 6, 5536);
     			attr_dev(div4, "class", "controls svelte-tjbafg");
-    			add_location(div4, file$8, 238, 4, 5467);
+    			add_location(div4, file$8, 237, 4, 5437);
     			attr_dev(div5, "class", "gamearea svelte-tjbafg");
-    			add_location(div5, file$8, 221, 2, 5082);
+    			add_location(div5, file$8, 220, 2, 5052);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div5, anchor);
@@ -9098,14 +9102,14 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(220:0) {:else}",
+    		source: "(219:0) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (217:0) {#if !usertoken}
+    // (216:0) {#if !usertoken}
     function create_if_block$1(ctx) {
     	let current;
     	const login = new Login({ $$inline: true });
@@ -9138,14 +9142,14 @@ var app = (function () {
     		block,
     		id: create_if_block$1.name,
     		type: "if",
-    		source: "(217:0) {#if !usertoken}",
+    		source: "(216:0) {#if !usertoken}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (242:8) {#if me}
+    // (241:8) {#if me}
     function create_if_block_1(ctx) {
     	let t0;
     	let t1_value = ctx.me.info.name + "";
@@ -9177,7 +9181,7 @@ var app = (function () {
     		block,
     		id: create_if_block_1.name,
     		type: "if",
-    		source: "(242:8) {#if me}",
+    		source: "(241:8) {#if me}",
     		ctx
     	});
 
@@ -9317,7 +9321,7 @@ var app = (function () {
     		$$invalidate("pusher", pusher = new Pusher("5682fcdf7df3eb814416",
     		{
     				cluster: "eu",
-    				forceTLS: true,
+    				forceTLS: false,
     				auth: {
     					headers: { authorization: `Bearer ${usertoken}` }
     				}
@@ -9402,8 +9406,6 @@ var app = (function () {
     	};
 
     	const onPlayerControl = evt => {
-    		console.log(konamiEnabled);
-
     		const position = {
     			...playerDefaultStartPos,
     			...playerPositions[me.id],
