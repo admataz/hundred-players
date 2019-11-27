@@ -2,6 +2,7 @@
   export let player;
   export let xPos = 0;
   export let yPos = 0;
+  export let konami = true;
 </script>
 
 <style>
@@ -12,9 +13,9 @@
   }
 
   .player-name {
-    font-size: 10px;
+    font-size: 14px;
     text-transform: uppercase;
-    fill: #999;
+    fill: #fff;
   }
   .team-0 {
     fill: red;
@@ -26,8 +27,8 @@
 </style>
 
 <svg y="{yPos}%" x="{xPos}%" overflow="visible">
-  <text class="player-name team-{player.team}" x="12" y="5">
-    {player.info.name}
+  <text class="player-name" x="-10" y="27">
+    {player.konamiEnabled ? "😀" :  player.info.name}
   </text>
     <rect
     class="player team-{player.team}"

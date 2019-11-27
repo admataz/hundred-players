@@ -169,7 +169,7 @@
     <Goal side="right" {goalPosts} size={goalSize} />
     <Ball {...ballPos} />
     {#each renderedPlayers as player}
-      <Player {player} xPos={player.xPos} yPos={player.yPos} />
+      <Player {player} xPos={player.xPos} yPos={player.yPos} konami={player.konamiEnabled} />
     {/each}
   </svg>
 

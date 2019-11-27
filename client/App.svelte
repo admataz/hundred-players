@@ -34,6 +34,7 @@
   let scoreline = [0, 0];
   let arenaSize = { width: 100, height: 100 };
   let playerSpeed = 1;
+  let konamiEnabled = false
 
   const setCurrentMembers = pusherMembers => {
     const members = [];
@@ -145,11 +146,13 @@
   };
 
   const onPlayerControl = evt => {
+    console.log(konamiEnabled)
     const position = {
       ...playerDefaultStartPos,
       ...playerPositions[me.id],
       ...evt.detail,
-      speed: playerSpeed
+      speed: playerSpeed,
+      konamiEnabled
     };
     updatePlayerPositions(me.id, position);
     pusherChannel.trigger("client-player-move", position);
@@ -175,6 +178,12 @@
       pusherChannel.trigger("client-ball-bounce", evt.detail);
     }
   };
+
+  const onKonami = evt => {
+    konamiEnabled = true;
+    console.log('KONAMI!!!')
+    setTimeout(()=>konamiEnabled = false, 20000)
+  }
 </script>
 
 <style>
@@ -228,7 +237,7 @@
     </div>
 
     <div class="controls">
-      <Controls on:controls={onPlayerControl} />
+      <Controls on:controls={onPlayerControl} on:konami={onKonami} />
       <div class="greeting">
         {#if me}Hello {me.info.name}!{/if}
       </div>

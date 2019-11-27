@@ -75,7 +75,8 @@
   const onKeyUp = evt => {
     activeKeys.set(evt.key, false);
     if (sequence.match("kkjjhlhlba")) {
-      console.log("Konami!!");
+      dispatch('konami');
+      
       sequence = "";
     }
     switch (evt.key) {
@@ -149,6 +150,7 @@
   <div class="button-row">
     <button on:mousedown={goDown} on:mouseup={goStop} on:touchstart={goDown} on:touchend={goStop}>down</button>
   </div>
+<div class="button-row">(arrow keys and vi style `hjkl` also work)</div>
 </div>
 
 </div>
