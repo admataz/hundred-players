@@ -52,7 +52,7 @@
   const pusherInit = () => {
     pusher = new Pusher("5682fcdf7df3eb814416", {
       cluster: "eu",
-      forceTLS: true,
+      forceTLS: false,
       auth: {
         headers: {
           authorization: `Bearer ${usertoken}`
@@ -146,7 +146,6 @@
   };
 
   const onPlayerControl = evt => {
-    console.log(konamiEnabled)
     const position = {
       ...playerDefaultStartPos,
       ...playerPositions[me.id],
