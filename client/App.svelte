@@ -50,7 +50,7 @@
   };
 
   const pusherInit = () => {
-    pusher = new Pusher("5682fcdf7df3eb814416", {
+    pusher = new Pusher(process.env.PUSHER_API_KEY, {
       cluster: "eu",
       forceTLS: false,
       auth: {
