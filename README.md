@@ -2,6 +2,8 @@
 
 An experimental game I created for a lightning talk at [London Node User Group](https://lnug.org) in November 2019
 
+![in game action!](./hundred-players-opt.gif)
+
 The basic idea is to use available technologies to create an online game that could take multiple partipants at the same time and allow a shared, emergent experience with attendees. 
 
 In this experiment I use 
